@@ -66,7 +66,7 @@ class ProductController extends Controller
         if (!$update) {
             return response()->json(
                 [
-                    'message' => 'Không tìm thấy sản phẩm'
+                    'message' => 'Không tìm thấy sản phẩm hoặc cập nhật fail'
                 ],
                 404
             );

@@ -23,8 +23,16 @@ class ProductRepository implements IProductRepository
 
     public function update($id, array $data)
     {
-        return Product::where('id', $id)->update($data);
+        $product = Product::find($id);
+        if (!$product) {
+            return false;
+        }
+    
+        $products = $product->update($data);
+    
+        return $products; // true nếu có thay đổi, false nếu không
     }
+    
 
     public function delete($id)
     {
