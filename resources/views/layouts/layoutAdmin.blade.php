@@ -681,17 +681,25 @@
                 <!-- End Navbar -->
             </div>
 
-            <div class="container">
-                <div class="page-inner">
-                    <div class="page-category">
-                        <h1 class="mb-4">Quản lý sản phẩm</h1>
-                        @if(session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
-                        @yield('content')
-                    </div>
-                </div>
-            </div>
+<!-- main -->
+<div class="container">
+    <div class="page-inner">
+        <div class="page-category">
+            <h1 class="mb-4">Quản lý sản phẩm</h1>
+
+            @if(session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+        
+            <div id="app"></div>
+        </div>
+    </div>
+</div>
+
+{{-- Nhúng Vite React --}}
+@viteReactRefresh
+@vite(['resources/js/app.jsx'])
+<!-- end main -->
 
             <footer class="footer">
                 <div class="container-fluid d-flex justify-content-between">
