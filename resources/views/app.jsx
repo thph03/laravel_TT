@@ -1,9 +1,9 @@
 import React from 'react';
-// import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ProductList from './components/index';
-import ProductCreate from './components/create';
-import ProductEdit from './components/edit';
+import ProductList from '../js/components/index';
+import ProductCreate from '../js/components/create';
+import ProductEdit from '../js/components/edit';
 
 function App() {
   return (

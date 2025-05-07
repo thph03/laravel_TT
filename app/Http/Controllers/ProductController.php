@@ -52,30 +52,50 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return response()->json($product);
     }
 
+    // public function update(Request $request, $id)
+    // {
+    //     $data = $request->only(['name', 'description', 'price', 'quantity']);
+    //     $update = $this->productRepo->update($id, $data);
+
+    //     // return redirect()->route('products.index')->with('success', 'Đã cập nhật rồi nha');
+    //     if (!$update) {
+    //         return response()->json(
+    //             [
+    //                 'message' => 'Không tìm thấy sản phẩm hoặc cập nhật fail'
+    //             ],
+    //             404
+    //         );
+    //     }
+    //     return response()->json(
+    //         [
+    //             'message' => 'Đã cập nhật rồi nha'
+    //         ]
+    //     );
+    // }
     public function update(Request $request, $id)
     {
-        $data = $request->only(['name', 'description', 'price', 'quantity']);
-        $update = $this->productRepo->update($id, $data);
+        $product = Product::findOrFail($id);
 
-        // return redirect()->route('products.index')->with('success', 'Đã cập nhật rồi nha');
-        if (!$update) {
-            return response()->json(
-                [
-                    'message' => 'Không tìm thấy sản phẩm hoặc cập nhật fail'
-                ],
-                404
-            );
-        }
-        return response()->json(
-            [
-                'message' => 'Đã cập nhật rồi nha'
-            ]
-        );
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+        ]);
+
+        $product->update($validated);
+
+        return response()->json([
+            'message' => 'Cập nhật sản phẩm thành công!',
+            'data' => $product,
+        ]);
     }
 
     public function edit($id)
@@ -93,8 +113,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $delete=$this->productRepo->delete($id);
-        if(!$delete) {
+        $delete = $this->productRepo->delete($id);
+        if (!$delete) {
             return response()->json(['message' => 'Không thấy sp nào hết:<'], 400);
         }
         // return redirect()->route('products.index')->with('success', 'Mất tiêu rồi');
